@@ -19,6 +19,15 @@ else
   export SEVERITY="low"
 fi
 
-npm ci
+docker build -t jvrck-node-snyk:latest
+docker run \
+  -e SNYK_TOKEN \
+  -e SEVERITY \
+  -v `pwd`:/app jvrck-node-snyk
 
-snyk test --severity-threshold=$SEVERITY
+
+###########
+
+# npm ci
+
+# snyk test --severity-threshold=$SEVERITY
