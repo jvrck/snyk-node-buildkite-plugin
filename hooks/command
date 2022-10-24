@@ -6,7 +6,7 @@ if [[ -n "$SNYK_TOKEN" ]];
 then
   echo "Snyk token set"
 else
-  echo "Snyk token set...exiting"
+  echo "Snyk token not set...exiting"
   exit 1
 fi
 
@@ -19,9 +19,17 @@ else
   export SEVERITY="low"
 fi
 
+# setting org severity
+if [[ -n "$BUILDKITE_PLUGIN_SNYK_NODE_ORG" ]];
+then
+  echo "Org: $BUILDKITE_PLUGIN_SNYK_NODE_ORG"
+  export ORG=$BUILDKITE_PLUGIN_SNYK_NODE_ORG
+fi
+
 DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 docker build -t jvrck-node-snyk:latest ${DIR}/..
 docker run \
   -e SNYK_TOKEN \
   -e SEVERITY \
+  -e ORG \
   -v `pwd`:/app jvrck-node-snyk
