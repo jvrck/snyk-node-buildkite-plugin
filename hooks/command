@@ -19,7 +19,8 @@ else
   export SEVERITY="low"
 fi
 
-docker build -t jvrck-node-snyk:latest .
+DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+docker build -t jvrck-node-snyk:latest ${DIR}/..
 docker run \
   -e SNYK_TOKEN \
   -e SEVERITY \
