@@ -19,7 +19,7 @@ else
   export SEVERITY="low"
 fi
 
-docker build -t jvrck-node-snyk:latest
+docker build -t jvrck-node-snyk:latest .
 docker run \
   -e SNYK_TOKEN \
   -e SEVERITY \
