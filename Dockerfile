@@ -2,11 +2,13 @@ FROM node:current-alpine3.16
 
 WORKDIR /app
 
-COPY scan.sh /scan.sh
-RUN chmod +x /scan.sh
+COPY scan.sh /scripts/scan.sh
+RUN chmod +x /scripts/scan.sh
 
 RUN apk update && \
     apk add --no-cache bash && \
     npm install -g snyk
 
-CMD [ "sh" "/scan.sh" ]
+ENV PATH "$PATH:/scripts"
+
+CMD [ "scan.sh" ]
