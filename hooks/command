@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+# setting SNYK_TOKEN
+if [[ -n "$SNYK_TOKEN" ]];
+then
+  echo "Snyk token set"
+else
+  echo "Snyk token set...exiting"
+  exit 1
+fi
+
+# setting severity
+if [[ -n "$BUILDKITE_PLUGIN_SNYK_SEVERITY" ]];
+then
+  echo "Severity: $BUILDKITE_PLUGIN_SNYK_SEVERITY"
+  export SEVERITY=$BUILDKITE_PLUGIN_SNYK_SEVERITY
+else
+  export SEVERITY="low"
+fi
+
+npm ci
+
+snyk test --severity-threshold=$SEVERITY
