@@ -8,4 +8,4 @@ RUN apk update && \
     apk add --no-cache bash && \
     npm install -g snyk
 
-CMD [ "scan.sh" ]
+CMD [ "/app/scan.sh" ]
